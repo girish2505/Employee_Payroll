@@ -46,3 +46,22 @@ select min(salary) as minSalary ,gender from employee_payroll   group by gender;
 select count(salary) as CountofGender ,gender from employee_payroll   group by gender;
 
 select max(salary) as maxSalary ,gender from employee_payroll   group by gender;
+
+-------------UC8-----------
+alter table employee_payroll add PhoneNumber bigint;
+
+alter table employee_payroll add Department varchar(20) not null default 'HR';
+
+update employee_payroll set PhoneNumber=7660094458 where name='girish';
+update employee_payroll set PhoneNumber=9182501714 where name='madhu';
+update employee_payroll set PhoneNumber=9123456780 where name='nivas';
+update employee_payroll set PhoneNumber=8123456790 where name='pavan';
+
+
+alter table employee_payroll add Address varchar(25) default 'Not Provided';
+
+
+update employee_payroll set Address='nellore' where name='girish';
+update employee_payroll set Address='hyderabad' where name='madhu';
+update employee_payroll set Address='banglore' where name='nivas';
+update employee_payroll set Address='chennai' where name='pavan';
