@@ -24,3 +24,10 @@ select * from employee_payroll;
 --------UC5-----------
 select name,salary from employee_payroll where name='nivas';
 select name,salary from employee_payroll where startDate between ('2021-01-01') and getdate();
+
+-------------UC6----------
+alter table employee_payroll add Gender char(1);
+
+update employee_payroll set Gender='M' where name='girish' or name='nivas' or name='pavan';
+
+update employee_payroll set Gender='F' where name='madhu';
