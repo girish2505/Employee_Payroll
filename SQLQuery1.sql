@@ -89,7 +89,7 @@ update employee_payroll set TaxablePay=200;
 ----------UC10--------------
 Insert into employee_payroll values('madhu',28000,'2021-07-21','v.m@gmail.com','F',9182501714,'HR','hyderabad',1500,200,1200,23800);
 
----------------UC11---->Implement the ER Diagram------
+---------------UC11----
 ---Company Table
 Create Table Company
 (CompanyID int identity(1,1) primary key,
@@ -172,3 +172,48 @@ Insert into EmployeeDept(Dept_Id,Employee_Id) values
 (2,4);
 --Retrieve the data
 select * from EmployeeDept;
+
+-----------UC12------------
+
+---UC4-->Retrieve the data 
+Select CompanyID,CompanyName,
+EmployeeID,EmployeeName,EmployeeAddress,EmployeePhoneNum,StartDate,Gender,
+BasicPay,TaxablePay,IncomeTax,NetPay,Deductions,DepartmentId,DepartName
+from Company
+inner join Employee on Company.CompanyID=Employee.Company_Id
+inner join PayRollCalculate on PayRollCalculate.Employee_Id=Employee.EmployeeId
+inner join EmployeeDept on EmployeeDept.Employee_Id=Employee.EmployeeID
+inner join DepartmentTable on DepartmentTable.DepartmentId=EmployeeDept.Dept_Id; 
+
+-------UC5---->Retrieve the data using employeename 
+select CompanyID,CompanyName,EmployeeID,EmployeeName,EmployeeAddress,EmployeePhoneNum,StartDate,Gender
+from Company
+inner join Employee on Company.CompanyID=Employee.Company_Id and Employee.EmployeeName='Vishnu';
+
+-------UC5------->Retrieve the data from startdate and now(current date)
+select CompanyID,CompanyName,EmployeeID,EmployeeName,StartDate,BasicPay 
+from Company
+inner join Employee on Company.CompanyID=Employee.Company_Id and StartDate between Cast('2019-01-01' as Date) and GetDate()
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id;
+
+-----UC7----->Performing aggregate Functions using group by...
+Select sum(BasicPay) as TotalSalary,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id group by Gender;
+
+Select Avg(BasicPay) as AvgSalary,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id group by gender;
+
+Select min(BasicPay) as MinSalary,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id group by Gender;
+
+Select max(BasicPay) as MaxSalary,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id 
+where Gender='F' group by Gender;
+
+Select count(BasicPay) as CountOfPersons,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id group by Gender;
